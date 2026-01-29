@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -22,3 +23,15 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ArticleImage(models.Model):
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name="images"
+    )
+    image = models.ImageField(upload_to="articles/images/")
+    caption = models.CharField(max_length=200, blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Imagen de {self.article.title} ({self.id})"
