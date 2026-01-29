@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"
 
 export default function GridLayout() {
   const [articles, setArticles] = useState([]);
@@ -67,16 +68,15 @@ export default function GridLayout() {
   return (
     
     <div className="grid grid-cols-3 grid-rows-2 gap-4 h-screen p-4">
-{/* Tomamos los primeros 6 artículos y los mapeamos */}
-{articles.slice(0, 6).map((article) => (
-  <div key={article.id} className="p-3 flex flex-col h-auto gap-[32px]">
-    <Card
-      article={article}
-    />
-  </div>
-))}
-
-
+      {articles.slice(0, 6).map((article) => (
+        <Link
+          key={article.id}
+          to={`/articles/${article.id}`}
+          className="p-3 flex flex-col h-auto gap-[32px] block"
+        >
+          <Card article={article} />
+        </Link>
+      ))}
     </div>
   );
 }

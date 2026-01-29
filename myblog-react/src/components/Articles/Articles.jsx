@@ -1,18 +1,23 @@
 import { useArticles } from "../../context/ArticleContext"
-const Card = ({ index }) => {
-  const { articles } = useArticles(); // obtienes los artículos desde el context
-  const article = articles[index];    // seleccionas el artículo según el índice
+import { useParams } from "react-router-dom"
+
+const Card = () => {
+  const { id } = useParams()           // obtenemos el ID desde la URL
+  const { articles } = useArticles()   // obtenemos todos los artículos desde el context
+
+  // buscamos el artículo que coincida con el ID
+  const article = articles.find(a => a.id.toString() === id)
 
   if (!article) {
     return (
       <div className="text-white text-center flex items-center justify-center h-full">
         Sin artículo
       </div>
-    );
+    )
   }
 
   return (
-    <>
+    <div className="p-3 flex flex-col h-auto gap-[32px]">
       {article.cover_image && (
         <img
           src={
@@ -21,6 +26,7 @@ const Card = ({ index }) => {
               : `http://localhost:8000${article.cover_image}`
           }
           alt={article.title}
+          className="w-full h-[228px] object-cover"
         />
       )}
 
@@ -36,8 +42,8 @@ const Card = ({ index }) => {
           </p>
         )}
       </div>
-    </>
-  );
-};
-export default Card;
+    </div>
+  )
+}
 
+export default Card
