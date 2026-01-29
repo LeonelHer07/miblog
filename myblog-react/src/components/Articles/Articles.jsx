@@ -21,7 +21,6 @@ const Card = ({ index }) => {
               : `http://localhost:8000${article.cover_image}`
           }
           alt={article.title}
-          
         />
       )}
 
