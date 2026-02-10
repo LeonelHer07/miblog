@@ -66,8 +66,7 @@ export default function GridLayout() {
   }
 
   return (
-    
-    <div className="grid grid-cols-3 grid-rows-2 gap-4 h-screen p-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-4 h-screen p-4">
       {articles.slice(0, 6).map((article) => (
         <Link
           key={article.id}
@@ -79,4 +78,5 @@ export default function GridLayout() {
       ))}
     </div>
   );
+
 }
