@@ -46,14 +46,14 @@ export default function GridLayout() {
           />
         )}
 
-        <h2 className="text-black font-bold text-lg">{article.title}</h2>
+        <h2 className="text-black font-bold text-lg dark:text-white">{article.title}</h2>
 
-        <p className="text-black text-xs mb-[24px]">
+        <p className="text-black text-xs mb-[24px] dark:text-white">
           {article.body?.substring(0, 120)}
         </p>
 
         {article.tags && (
-          <p className="text-black text-[10px]">
+          <p className="text-black text-[10px] dark:text-white ">
             {article.tags.map((tag) => tag.name).join(", ")}
           </p>
         )}

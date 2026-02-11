@@ -28,14 +28,14 @@ export default function GridLayout() {
         )}
 
         <div>
-          <h2 className="text-black font-bold text-lg mb-[12px]">{article.title}</h2>
+          <h2 className="text-black font-bold text-lg mb-[12px] dark:text-white">{article.title}</h2>
 
-          <p className="text-black text-sm mb-[24px]">
+          <p className="text-black text-sm mb-[24px] dark:text-white">
             {article.body?.substring(0, 200)}
           </p>
 
           {article.tags && (
-            <p className="text-black text-xs mt-1">
+            <p className="text-black text-xs mt-1 dark:text-white">
               {article.tags.map((tag) => tag.name).join(", ")}
             </p>
           )}

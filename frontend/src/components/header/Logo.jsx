@@ -1,12 +1,24 @@
-import React from 'react'
-import Log from "../../assets/Container.svg"
+import logoblack from "../../assets/logoblack.svg";
+import logowhite from "../../assets/logowhite.svg";
 
 const Logo = () => {
   return (
     <div>
-        <img src={Log} alt="" className="w-full" />
-    </div>
-  )
-}
+      {/* Logo modo claro */}
+      <img
+        src={logoblack}
+        alt="Logo claro"
+        className="w-full block dark:hidden"
+      />
 
-export default Logo
+      {/* Logo modo oscuro */}
+      <img
+        src={logowhite}
+        alt="Logo oscuro"
+        className="w-full hidden dark:block"
+      />
+    </div>
+  );
+};
+
+export default Logo;
