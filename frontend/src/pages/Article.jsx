@@ -1,30 +1,22 @@
-import React from 'react'
-import Nav from '../components/header/Nav'
-import RecentPost from "../components/Articles/RecentPost"
-import Card from "../components/Articles/Articles"
-
-
+import ArticleDetail from "../components/articles/ArticleDetail";
+import RecentPostsSidebar from "../components/articles/RecentPostsSidebar";
+import Nav from "../components/layout/Nav";
 
 const Article = () => {
   return (
-    <div className="ml-[112px] mr-[112px] mt-[30px]">
+    <main className="mx-auto w-full max-w-7xl px-4 py-6 text-slate-950 dark:text-white sm:px-6 lg:px-8">
         <Nav />
 
-        <div className='flex gap-[32px]'>
-          <div className='w-[342px]'>
-              <RecentPost/>
-          </div>
+        <div className='grid gap-8 lg:grid-cols-[320px_1fr]'>
+          <aside>
+              <RecentPostsSidebar/>
+          </aside>
 
-          <div className='w-full'>
-            <Card index={0}/>
-
-          </div>
+          <section className='min-w-0'>
+            <ArticleDetail />
+          </section>
         </div>
-
-        
-
-
-    </div>
+    </main>
   )
 }
 

@@ -1,28 +1,25 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Article from "./pages/Article";
-import { ArticlesProvider } from "./context/ArticleContext";
-import { ThemeProvider } from "./context/ThemeCcontext";
-import ScrollToTop from "./components/ScrollTop";
+import EditArticle from "./pages/EditArticle";
+import NewArticle from "./pages/NewArticle";
+import { ArticlesProvider } from "./context/ArticlesProvider";
+import { ThemeProvider } from "./context/ThemeProvider";
+import ScrollToTop from "./components/layout/ScrollTop";
 
 function App() {
   return (
-    <>
-    <div className="">
-        <ThemeProvider>
+    <ThemeProvider>
+      <ArticlesProvider>
         <ScrollToTop />
-        <ArticlesProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/articles/:id" element={<Article />} />
-          </Routes>
-        </ArticlesProvider>
-      </ThemeProvider>
-
-    </div>
-    
-
-    </>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/articles/new" element={<NewArticle />} />
+          <Route path="/articles/:id/edit" element={<EditArticle />} />
+          <Route path="/articles/:id" element={<Article />} />
+        </Routes>
+      </ArticlesProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,129 +1,124 @@
-
----
-
 # MyBlog
 
-**MyBlog** es un proyecto personal desarrollado como práctica, orientado a crear un blog funcional donde se pueden publicar, listar y mostrar artículos.
-El objetivo principal del proyecto es **practicar y demostrar habilidades en desarrollo fullstack**, utilizando **React** en el frontend, **Django** en el backend y **MySQL** como base de datos.
+MyBlog es un blog personal full-stack creado como proyecto de portafolio. Usa React con Vite en el frontend y Django REST Framework en el backend para listar y mostrar articulos publicados desde el panel de administracion de Django.
 
-El proyecto permite experimentar con la comunicación entre frontend y backend mediante APIs, gestión de datos en la base de datos y manejo de estados y rutas en React, brindando una experiencia de aprendizaje completa en desarrollo web fullstack.
+## Estructura
 
----
-
-## Estructura del proyecto
-
+```text
 myblog/
-├─ backend/              # Backend Django
-│   ├─ manage.py
-│   ├─ myblog/           # Proyecto Django (settings, urls, wsgi/asgi)
-│   ├─ apps/             # Apps Django (articles, users, etc.)
-│   └─ requirements.txt  # Dependencias Python
-├─ frontend/             # Frontend React
-│   ├─ package.json
-│   └─ src/
-│       ├─ assets/
-│       ├─ components/
-│       ├─ context/
-│       ├─ hooks/
-│       ├─ pages/
-│       ├─ routes/
-│       ├─ services/
-│       └─ utils/
-├─ venv/                 # Entorno virtual Python (opcional)
+├─ backend/
+│  ├─ backend/          # Settings, urls, wsgi/asgi
+│  ├─ core/             # Modelos, serializers, vistas y tests
+│  ├─ manage.py
+│  ├─ requirements.txt
+│  └─ .env.example
+├─ frontend/
+│  ├─ src/
+│  │  ├─ components/
+│  │  ├─ context/
+│  │  ├─ pages/
+│  │  └─ services/
+│  ├─ package.json
+│  └─ .env.example
 └─ README.md
+```
 
----
+## Tecnologias
 
-## Tecnologías
+- Frontend: React, Vite, React Router, Tailwind CSS, React Markdown.
+- Backend: Django, Django REST Framework.
+- Base de datos: SQLite por defecto para desarrollo; MySQL disponible por variables de entorno.
 
-* Frontend: React, React Router, Context API
-* Backend: Django, Django REST Framework
-* Base de datos: MySQL
-* Otros: Axios (frontend), environment variables, git
+## Organizacion del Codigo
 
----
+- `backend/backend/`: configuracion del proyecto Django. Es el nombre generado por Django; se puede renombrar a `config`, pero no es necesario para este tamano.
+- `backend/core/`: dominio principal del blog: modelos, serializers, vistas, urls, admin y tests.
+- `frontend/src/components/articles/`: componentes especificos del dominio de articulos.
+- `frontend/src/components/layout/`: componentes de estructura general como navegacion, logo, scroll y toggle de tema.
+- `frontend/src/context/`: providers, hooks y objetos context separados para mantener Fast Refresh limpio.
+- `frontend/src/services/`: comunicacion con APIs externas o backend propio.
 
-## Requisitos
+## Configuracion del Backend
 
-* Python 3.10+
-* Node.js 18+ y npm
-* MySQL 8+
-* Git
+```bash
+cd backend
+python -m venv ../venv
+../venv/Scripts/activate
+pip install -r requirements.txt
+copy .env.example .env
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
 
----
+El backend queda disponible en `http://127.0.0.1:8000/`.
 
-## Instalación y configuración
+Variables principales del backend:
 
-1. Clonar el proyecto:
-   `git clone https://github.com/tu-usuario/myblog.git`
-   `cd myblog`
+- `DJANGO_SECRET_KEY`: llave secreta de Django.
+- `DJANGO_DEBUG`: `True` en local, `False` en produccion.
+- `DJANGO_ALLOWED_HOSTS`: hosts permitidos separados por coma.
+- `CORS_ALLOWED_ORIGINS`: origenes del frontend permitidos.
+- `DB_ENGINE`: `sqlite` o `mysql`.
+- `DRF_PAGE_SIZE`: cantidad de articulos por pagina.
 
-2. Configurar entorno virtual para Django:
-   `python -m venv venv`
+## Configuracion del Frontend
 
-Activar el entorno:
+```bash
+cd frontend
+npm install
+copy .env.example .env
+npm run dev
+```
 
-* Linux/macOS: `source venv/bin/activate`
-* Windows (cmd): `venv\Scripts\activate`
-* Windows (PowerShell): `venv\Scripts\Activate.ps1`
+El frontend de Vite queda disponible normalmente en `http://localhost:5173/`.
 
-3. Instalar dependencias del backend:
-   `pip install -r backend/requirements.txt`
+Variable principal del frontend:
 
-4. Configurar base de datos en `backend/myblog/settings.py` y crear la base de datos en MySQL.
+- `VITE_API_BASE_URL`: URL base del backend, por ejemplo `http://localhost:8000`.
 
-5. Ejecutar migraciones Django:
-   `cd backend`
-   `python manage.py makemigrations`
-   `python manage.py migrate`
+## API
 
-6. Correr servidor Django:
-   `python manage.py runserver`
-   El backend estará en `http://127.0.0.1:8000/`.
+- `GET /api/articles/`: lista paginada de articulos.
+- `POST /api/articles/`: crea un articulo desde el frontend.
+- `GET /api/articles/<id>/`: detalle de un articulo.
+- `PATCH /api/articles/<id>/`: actualiza un articulo desde el frontend.
 
-7. Configurar y correr frontend:
-   `cd frontend`
-   `npm install`
-   `npm start`
-   El frontend estará en `http://localhost:3000/`.
+Los articulos se pueden crear desde `/articles/new`, editar desde `/articles/<id>/edit` o administrar desde `/admin/`. Mientras no exista autenticacion en el frontend, los articulos creados desde la UI usan el autor configurado en `DEFAULT_ARTICLE_AUTHOR_USERNAME`.
 
----
+El editor del frontend incluye comandos con `/` para insertar formatos como encabezados, negrita, listas, citas, bloques de codigo, enlaces, divisores, color y tamano de texto.
 
-## Uso
+## Validacion
 
-* Accede al blog desde el navegador (`localhost:3000`)
-* Las rutas consumen la API Django (`localhost:8000/api/`)
-* Puedes agregar, editar y listar artículos mediante la interfaz.
+Backend:
 
----
+```bash
+cd backend
+python manage.py check
+python manage.py test
+```
 
-## Despliegue
+Datos demo:
 
-* Frontend estático: GitHub Pages, Vercel o Render (apuntar a `frontend/build/`)
-* Backend Django: Render, Railway o Heroku
-* Base de datos: Render Postgres recomendado, o MySQL en un servidor remoto
+```bash
+cd backend
+python manage.py seed_portfolio_posts
+```
 
----
+Este comando agrega 15 articulos de demostracion con imagenes descargadas desde Lorem Picsum.
 
-## Buenas prácticas
+Frontend:
 
-* Mantener `venv/` y `node_modules/` en `.gitignore`
-* Actualizar `requirements.txt` después de instalar nuevas dependencias:
-  `pip freeze > backend/requirements.txt`
-* Separar rutas, hooks, context y servicios en frontend para escalabilidad
+```bash
+cd frontend
+npm run lint
+npm run build
+```
 
----
+## Notas de Repositorio
 
-## Recursos
-
-* Documentación Django: [https://docs.djangoproject.com/](https://docs.djangoproject.com/)
-* Django REST Framework: [https://www.django-rest-framework.org/](https://www.django-rest-framework.org/)
-* React: [https://reactjs.org/](https://reactjs.org/)
-
----
+El repositorio ignora entornos virtuales, caches de Python, archivos `.env`, media local de Django y artefactos de build. Las imagenes subidas en desarrollo no se versionan; para despliegue publico conviene usar almacenamiento externo o configurar media persistente en la plataforma elegida.
 
 ## Autor
 
 Leo [LeonelHer07](https://github.com/LeonelHer07)
-
----
